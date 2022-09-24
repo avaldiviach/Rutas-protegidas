@@ -1,5 +1,3 @@
-import { Navigate } from "react-router-dom";
-
 export const Landing = () => <h2>Landing Page (Public)</h2>;
 
 export const Home = () => <h2>Home Page (Private)</h2>;

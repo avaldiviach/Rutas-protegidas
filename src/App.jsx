@@ -6,24 +6,30 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 function App() {
   const [user, setUser] = useState(null);
 
-  const login = () =>
+  /*const login = () =>
     setUser({
       id: 1,
       name: "John",
       permissions: ["analize"],
       roles: ["admin"],
     });
-  const logout = () => setUser(null);
+  const logout = () => setUser(null); */
 
   return (
     <BrowserRouter>
       <Navigation />
 
-      {user ? (
-        <button onClick={logout}>Logout</button>
-      ) : (
-        <button onClick={login}>Login</button>
-      )}
+      <button
+        onClick={user
+          ? () => setUser(null)
+          : () => setUser({
+            id: 1,
+            name: "John",
+            permissions: ["analize"],
+            roles: ["admin"],
+          })}>
+        {user ? "Logout" : "Login"}
+      </button>
 
       <Routes>
         <Route index element={<Landing />} />
@@ -37,7 +43,7 @@ function App() {
           element={
             <ProtectedRoute
               redirectTo="/home"
-              isAllowed={!!user && user.permissions.includes("analize")}
+              isAllowed={!!user && user?.permissions?.includes("analize")}
             >
               <Analytics />
             </ProtectedRoute>
@@ -48,7 +54,7 @@ function App() {
           element={
             <ProtectedRoute
               redirectTo="/home"
-              isAllowed={!!user && user.roles.includes("admin")}
+              isAllowed={!!user && user?.roles?.includes("admin")}
             >
               <Admin />
             </ProtectedRoute>
